@@ -2,15 +2,14 @@ import datetime
 import os.path
 from pathlib import Path
 import curses
-# import unicurses
+import Menu
 
 data_folder = str(Path.home()) + "/KnowledgeTrainer"
 
 settings = {}
 cards = []
 
-stdscr = None
-
+screen_size = (0, 0)
 
 def read_ini_file():
     if not os.path.exists(data_folder):
@@ -130,22 +129,30 @@ def get_next_interval_by_level(lvl) -> int:
 
 
 def show_menu():
+
     stdscr = curses.initscr()
     curses.noecho()
     curses.cbreak()
     stdscr.keypad(True)
 
+    if curses.has_colors():
+        curses.start_color()
+        curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_RED)
+
+    global screen_size
+    screen_size = stdscr.getmaxyx()
+
     stdscr.clear()
     title = "Knowledge Trainer 1.0"
     subtitle = "by Sebastian Borsch"
-    screen_size = stdscr.getmaxyx()
+
     stdscr.addstr(0, int(screen_size[1] / 2 - (len(title) / 2)), title, curses.A_BOLD)
     stdscr.addstr(1, int(screen_size[1] / 2 - (len(subtitle) / 2)), subtitle, curses.A_DIM)
 
     if settings['Username'] == '':
-        enter_username_dialog(stdscr, screen_size)
+        enter_username_dialog(stdscr)
 
-    show_welcome_screen(stdscr, screen_size)
+    show_welcome_screen(stdscr)
 
     stdscr.clear()
 
@@ -156,51 +163,33 @@ def show_menu():
     curses.endwin()
 
 
-def enter_username_dialog(stdscr, screen_size):
+def enter_username_dialog(stdscr):
     yStartPos = int(screen_size[0] / 2 - 3)
     xStartPos = int(screen_size[1] / 5)
     stdscr.addstr(yStartPos, xStartPos, "Du musst einer neuer Nutzer sein. Wie heisst du?")
     stdscr.addstr(yStartPos + 1, xStartPos, "(Namen eingeben und mit ENTER bestätigen)", curses.A_LOW)
 
-    settings['Username'] = input_text(stdscr, yStartPos + 6, xStartPos)
+    settings['Username'] = input_text(stdscr, yStartPos + 3, xStartPos)
     write_ini_file()
     stdscr.clear()
 
 
-def show_welcome_screen(stdscr, screen_size):
+def show_welcome_screen(stdscr):
     y_start_pos = int(screen_size[0] / 2 - 4)
     x_start_pos = int(screen_size[1] / 5)
 
-    while True:
-        stdscr.addstr(y_start_pos, x_start_pos, "Willkommen beim Knowledge Trainer, " + settings['Username'],
-                      curses.A_BOLD)
-        stdscr.addstr(y_start_pos + 1, x_start_pos, "Wähle eine Nummer um fortzufahren.")
-        stdscr.addstr(y_start_pos + 3, x_start_pos, "[1] Abfrage starten.")
-        stdscr.addstr(y_start_pos + 4, x_start_pos, "[2] Neue Fragen anlegen.")
-        stdscr.addstr(y_start_pos + 5, x_start_pos, "[3] Einstellungen bearbeiten.")
-        stdscr.addstr(y_start_pos + 6, x_start_pos, "[4] Verlassen.")
+    main_menu = Menu.SelectionMenu( "Willkommen beim Knowledge Trainer, " + settings['Username'],
+                                    "Wähle eine Nummer um fortzufahren.")
+    main_menu.add_item("Tägliche Abfrage.", ask_questions)
+    main_menu.add_item("Kategorie abfragen.", show_not_implemented_field)
+    main_menu.add_item("Neue Fragen anlegen.", show_not_implemented_field)
+    main_menu.add_item("Einstellungen", show_not_implemented_field)
+    main_menu.add_item("Beenden", show_goodbye)
 
-        selection = chr(stdscr.getch())
-        stdscr.clear()
-
-        if int(selection) == 1:
-            ask_questions(stdscr, screen_size)
-            break
-        elif int(selection) == 2:
-            create_new_questions(stdscr, screen_size)
-        elif int(selection) == 3:
-            pass
-        elif int(selection) == 4:
-            return
-        else:
-
-            stdscr.addstr(y_start_pos, x_start_pos, "Ungültige Eingabe...", curses.A_BOLD)
-            stdscr.refresh()
-            curses.napms(2000)
-            stdscr.clear()
+    display_menu(stdscr, y_start_pos, x_start_pos, main_menu)
 
 
-def ask_questions(stdscr, screen_size):
+def ask_questions(stdscr):
     y_start_pos = int(screen_size[0] / 2 - 4)
     x_start_pos = int(screen_size[1] / 5)
 
@@ -250,7 +239,7 @@ def ask_questions(stdscr, screen_size):
     stdscr.clear()
 
 
-def create_new_questions(stdscr, screen_size):
+def create_new_questions(stdscr):
     y_start_pos = int(screen_size[0] / 2 - 4)
     x_start_pos = int(screen_size[1] / 5)
 
@@ -292,8 +281,73 @@ def create_new_questions(stdscr, screen_size):
         stdscr.clear()
 
 
+def display_menu(stdscr, y, x, menu):
+
+    y_add = 0
+    stdscr.addstr(y + y_add, x, menu.title)
+    y_add = y_add + 2
+
+    for item in menu.get_item_names():
+        stdscr.addstr(y + y_add, x, item)
+        y_add = y_add + 1
+
+    stdscr.move(y + y_add, x)
+    selection_index = ""
+    while True:
+        c = stdscr.getch()
+
+        if c == curses.KEY_ENTER or c == 10:
+            if int(selection_index) - 1 > len(menu.items):
+                selection_index = "Ungültige Auswahl!"
+                stdscr.addstr(y+y_add, x, selection_index, curses.color_pair(1))
+                stdscr.refresh()
+                curses.napms(1500)
+                selection_index = ""
+                stdscr.deleteln()
+                stdscr.move(y + y_add, x)
+                stdscr.refresh()
+                continue
+            else:
+                break
+
+        if not chr(c).isdigit():
+            continue
+
+        selection_index = selection_index + chr(c)
+        stdscr.addstr(y+y_add, x, selection_index)
+        stdscr.refresh()
+
+    menu.items[int(selection_index) - 1][1](stdscr)
+
+
+def show_goodbye(stdscr):
+
+    goodbye_text = "Auf Wiedersehen, " + settings['Username'] + "."
+
+    y = int(screen_size[0] / 2 - 4)
+    x = int(screen_size[1] / 2 - len(goodbye_text) / 2)
+
+    stdscr.clear()
+    stdscr.addstr(y, x, goodbye_text)
+    stdscr.refresh()
+    curses.napms(3000)
+
+
+def show_not_implemented_field(stdscr):
+    y = int(screen_size[0] / 2 - 4)
+    x = int(screen_size[1] / 5)
+
+    stdscr.clear()
+    stdscr.addstr(y, x, "Dieser Abschnitt ist noch nicht fertig... Ein kommendes Update wird das hinzufuegen.")
+    stdscr.refresh()
+    curses.napms(2000)
+    stdscr.clear()
+    show_welcome_screen(stdscr)
+
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+
     read_ini_file()
     read_csv_database()
     show_menu()
