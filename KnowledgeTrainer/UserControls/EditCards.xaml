@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="KnowledgeTrainer.UserControls.EditCards"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KnowledgeTrainer.UserControls" xmlns:viewmodels="clr-namespace:KnowledgeTrainer.MVVMNavigation.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CardEditViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Width="100" Height="24" HorizontalAlignment="Left" Command="{Binding GoToMainMenu}" Content="Hauptmenü">
+                <Button.Background>
+                    <SolidColorBrush Color="White" Opacity="0.1"/>
+                </Button.Background>
+            </Button>
+
+            <ListView Grid.Row="1" x:Name="Cards">
+                <ListView.Background>
+                    <SolidColorBrush Color="White" Opacity="0.3"/>
+                </ListView.Background>
+
+            </ListView>
+
+        </Grid>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Stretch" Command="{Binding CreateNewCard}">+</Button>
+            <Button Grid.Row="1" Height="24" VerticalAlignment="Top" HorizontalAlignment="Stretch" Command="{Binding EditCard}">
+                <Image Source="Icons/edit.png"/>
+            </Button>
+            <Button Grid.Row="2" Height="24" VerticalAlignment="Top" HorizontalAlignment="Stretch" Command="{Binding DeleteCard}">
+                <Image Width="24" Height="24" Source="Icons/trash.png"/>
+            </Button>
+        </Grid>
+
+        <Label Grid.Column="2" Height="50" VerticalAlignment="Top" FontSize="30" HorizontalAlignment="Center" Content="New Card"/>
+        <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Visibility="{Binding Path=EditingFieldsVisible, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Card ID:"/>
+            <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding CardID}"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Aktuelles Level:"/>
+            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding Level}"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Kategorie:"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" MinWidth="250" MaxWidth="500"/>
+            <Button Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Width="75" FontSize="8" Content="Neue Kategorie" Command="{Binding NewCategory}"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Frage:"/>
+            <TextBox Grid.Row="3" Grid.Column="1" FontSize="16" Text="{Binding Path=QuestionText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="Antwort:"/>
+            <TextBox Grid.Row="4" Grid.Column="1" FontSize="16" Text="{Binding Path=AnswerText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
+            <Grid Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Stretch" Background="DarkRed" Content="Abbrechen" Command="{Binding CancelAction}"/>
+                <Button Grid.Column="2" HorizontalAlignment="Stretch" Background="ForestGreen" Content="Übernehmen" Command="{Binding ConfirmAction}" IsEnabled="{Binding Path=NecessaryFieldsAreSet, Converter={StaticResource BoolToVis}}" />
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>

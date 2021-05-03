@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="KnowledgeTrainer.UserControls.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:KnowledgeTrainer"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Label x:Name="Headline" Content="Knowledge Trainer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" FontStyle="Normal" FontSize="36" FontWeight="Bold" FontFamily="Courgette" RenderTransformOrigin="0.5,0.5">
+        </Label>
+        <Label x:Name="Greeter" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" FontStyle="Normal" FontSize="20" FontWeight="Normal" FontFamily="Courgette" Background="Transparent" Content="gfnfgh"/>
+        <Label x:Name="Copyright" Content="Created by Sebastian Borsch" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,100,0,0" FontStyle="Italic" FontWeight="Thin" FontFamily="Courgette" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontStretch="Medium" FontSize="11" Foreground="DimGray"/>
+        <WrapPanel Width="290" Height="140">
+            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Quick_Start_Button" Content="Abfrage starten" Command="{Binding GoToQuestioning}"  HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" Width="290" HorizontalContentAlignment="Left"/>
+            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Category_Select_Button" Content="Kategorie abfragen" Command="{Binding GoToCategories}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
+            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Edit_Cards_Button" Content="Karten hinzufügen / bearbeiten" Command="{Binding GoToCardEditing}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
+            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Settings_Button" Content="Einstellungen" Command="{Binding GoToSettings}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
+        </WrapPanel>
+
+    </Grid>
+</UserControl>
