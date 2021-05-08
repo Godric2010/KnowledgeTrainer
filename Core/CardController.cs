@@ -10,6 +10,8 @@ namespace Core
     {
         private readonly Database db;
 
+        private const string SaveFolderName = ".KnowledgeTrainer";
+
         public CardController()
         {
             db = new Database();
@@ -17,7 +19,14 @@ namespace Core
 
         public void Init()
         {
-            var cards = JsonSerializer.LoadCardsFromDisk("");
+            var saveFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + '\\' + SaveFolderName;
+
+            if(!System.IO.Directory.Exists(saveFolderPath))
+            {
+                System.IO.Directory.CreateDirectory(saveFolderPath);
+            }
+
+            var cards = JsonSerializer.LoadCardsFromDisk(saveFolderPath);
             if (cards == null) return;
 
             db.AddCards(cards);

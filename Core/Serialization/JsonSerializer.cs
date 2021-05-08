@@ -10,15 +10,22 @@ namespace Core.Serialization
 
         public static void SaveCardsToDisk(IEnumerable<Cards.Card> cards, string path)
         {
-           var jsonString =  JsonConvert.SerializeObject(cards);
-            System.IO.File.WriteAllText(path + dbName, jsonString);
+            var jsonString = JsonConvert.SerializeObject(cards);
+            System.IO.File.WriteAllText(path + '\\' + dbName, jsonString);
         }
 
         public static IEnumerable<Cards.Card> LoadCardsFromDisk(string path)
         {
             if (string.IsNullOrEmpty(path)) return null;
 
-            var jsonString = System.IO.File.ReadAllText(path + dbName);
+            var filePath = path + '\\' + dbName;
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return null;
+            }
+          
+            var jsonString = System.IO.File.ReadAllText(filePath);
             var cards = JsonConvert.DeserializeObject<IEnumerable<Cards.Card>>(jsonString);
             return cards;
         }
