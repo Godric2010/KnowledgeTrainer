@@ -12,6 +12,8 @@ namespace Core
 
         private const string SaveFolderName = ".KnowledgeTrainer";
 
+        private string CardSaveDirectoryPath => Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + '\\' + SaveFolderName;
+
         public CardController()
         {
             db = new Database();
@@ -19,14 +21,12 @@ namespace Core
 
         public void Init()
         {
-            var saveFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + '\\' + SaveFolderName;
-
-            if(!System.IO.Directory.Exists(saveFolderPath))
+            if(!System.IO.Directory.Exists(CardSaveDirectoryPath))
             {
-                System.IO.Directory.CreateDirectory(saveFolderPath);
+                System.IO.Directory.CreateDirectory(CardSaveDirectoryPath);
             }
 
-            var cards = JsonSerializer.LoadCardsFromDisk(saveFolderPath);
+            var cards = JsonSerializer.LoadCardsFromDisk(CardSaveDirectoryPath);
             if (cards == null) return;
 
             db.AddCards(cards);
@@ -36,13 +36,13 @@ namespace Core
         public void CreateNewCard(string category, string question, string answer)
         {
             db.AddNewCard(category, question, answer);
-            JsonSerializer.SaveCardsToDisk(db.Cards, "");
+            JsonSerializer.SaveCardsToDisk(db.Cards, CardSaveDirectoryPath);
         }
 
         public void DeleteCard(Guid cardID)
         {
             db.DeleteCard(cardID);
-            JsonSerializer.SaveCardsToDisk(db.Cards, "");
+            JsonSerializer.SaveCardsToDisk(db.Cards, CardSaveDirectoryPath);
         }
 
         public Card GetCardByID(Guid cardID)
@@ -54,7 +54,7 @@ namespace Core
         public void UpdateCard(Card dirtyCard)
         {
             db.EditCard(dirtyCard);
-            JsonSerializer.SaveCardsToDisk(db.Cards, "");
+            JsonSerializer.SaveCardsToDisk(db.Cards, CardSaveDirectoryPath);
         }
 
         public IEnumerable<Card> GetCardsByCategory(string category)
