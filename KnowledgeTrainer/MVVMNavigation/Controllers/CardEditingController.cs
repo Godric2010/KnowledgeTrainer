@@ -44,7 +44,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
 
             m_viewModel.CardID = m_activeCard.ID.ToString();
             m_viewModel.Level = m_activeCard.Level;
-            m_viewModel.Categorie = m_activeCard.Category;
+            m_viewModel.Category = m_activeCard.Category;
             m_viewModel.QuestionText = m_activeCard.Question;
             m_viewModel.AnswerText = m_activeCard.Answer;
             m_viewModel.NecessaryFieldsAreSet = true;
@@ -63,11 +63,11 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
         {
             if (m_activeCard == null)
             {
-                App.CardController.CreateNewCard(m_viewModel.Categorie, m_viewModel.QuestionText, m_viewModel.AnswerText);
+                App.CardController.CreateNewCard(m_viewModel.Category, m_viewModel.QuestionText, m_viewModel.AnswerText);
                 return;
             }
 
-            m_activeCard.Category = m_viewModel.Categorie;
+            m_activeCard.Category = m_viewModel.Category;
             m_activeCard.Question = m_viewModel.QuestionText;
             m_activeCard.Answer = m_viewModel.AnswerText;
 
@@ -78,7 +78,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
         {
             m_viewModel.CardID = "";
             m_viewModel.Level = 0;
-            m_viewModel.Categorie = "";
+            m_viewModel.Category = "";
             m_viewModel.QuestionText = "";
             m_viewModel.AnswerText = "";
             m_viewModel.NecessaryFieldsAreSet = false;
@@ -89,7 +89,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
         {
             m_viewModel.CardID = "Neue CardID wird beim Speichern angelegt.";
             m_viewModel.Level = 0;
-            m_viewModel.Categorie = "";
+            m_viewModel.Category = "";
             m_viewModel.QuestionText = "";
             m_viewModel.AnswerText = "";
             m_viewModel.NecessaryFieldsAreSet = false;
@@ -97,7 +97,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
 
         private void CheckNecessaryFields()
         {
-            m_viewModel.NecessaryFieldsAreSet = !string.IsNullOrEmpty(m_viewModel.Categorie) &&
+            m_viewModel.NecessaryFieldsAreSet = !string.IsNullOrEmpty(m_viewModel.Category) &&
                 !string.IsNullOrEmpty(m_viewModel.QuestionText) &&
                 !string.IsNullOrEmpty(m_viewModel.AnswerText);
         }

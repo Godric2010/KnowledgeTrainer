@@ -20,7 +20,10 @@
         <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
             <uc:SettingsView/>
         </DataTemplate>
-        
+        <DataTemplate DataType="{x:Type vms:CardSelectionViewModel}">
+            <uc:CardSeletion/>
+        </DataTemplate>
+
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>

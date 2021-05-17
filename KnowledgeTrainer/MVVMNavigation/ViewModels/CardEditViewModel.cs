@@ -17,15 +17,19 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         private Action m_deleteCard;
 
-        private Action m_newCategory;
+        //private Action m_newCategory;
 
         private Action m_cancelAction;
 
         private Action m_confirmAction;
 
+        private string m_categoryName;
+
         private string m_questionText;
 
         private string m_answerText;
+
+        private List<string> m_cardItems;
 
         private bool m_editingFieldsVisible;
 
@@ -40,18 +44,28 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         public ICommand DeleteCard => new RelayCommand(x => { m_deleteCard.Invoke(); });
 
-        public ICommand NewCategory => new RelayCommand(x => { m_newCategory.Invoke(); });
+        //public ICommand NewCategory => new RelayCommand(x => { m_newCategory.Invoke(); });
 
         public ICommand CancelAction => new RelayCommand(x => { m_cancelAction.Invoke(); });
 
         public ICommand ConfirmAction => new RelayCommand(x => { m_confirmAction.Invoke(); });
 
 
+
+
         public string CardID { get; set; }
 
         public int Level { get; set; }
 
-        public string Categorie { get; set; }
+        public string Category
+        {
+            get => m_categoryName; set
+            {
+                m_categoryName = value;
+                OnPropertyChanged("Category");
+                m_checkNessecaryFieldsAreSet.Invoke();
+            }
+        }
 
         public string QuestionText
         {
@@ -111,10 +125,10 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             m_deleteCard = action;
         }
 
-        public void RegisterForNewCategory(Action action)
-        {
-            m_newCategory = action;
-        }
+        //public void RegisterForNewCategory(Action action)
+        //{
+        //    m_newCategory = action;
+        //}
 
         public void RegisterForCancelAction(Action action)
         {

@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="UserControls\CardSeletion.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\CategoriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -24,6 +27,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="UserControls\CardSeletion.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="UserControls\CategoriesView.xaml">
       <SubType>Designer</SubType>
     </Page>

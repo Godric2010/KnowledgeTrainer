@@ -19,7 +19,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         public ICommand GoToCategories => m_goToCategories ??= new RelayCommand(x => { Mediator.Notify("GoToCategories", ""); });
 
-        public ICommand GoToCardEditing => m_goToCardEditing ??= new RelayCommand(x => { Mediator.Notify("GoToCardEditing", ""); });
+        public ICommand GoToCardEditing => m_goToCardEditing ??= new RelayCommand(x => { Mediator.Notify("GoToCardSelection", ""); });
 
         public ICommand GoToSettings => m_goToSettings ??= new RelayCommand(x => { Mediator.Notify("GoToSettings", ""); });
     }

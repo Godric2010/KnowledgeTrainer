@@ -9,6 +9,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private QuestioningController m_questioningController;
+        private CardSelectionController m_cardSelectionController;
         private CardEditingController m_cardEditingController;
 
 
@@ -55,7 +56,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             ChangeViewModel(PageViewModels[2]);
         }
 
-        private void GoToEditCardsMenu(object obj)
+        private void GoToCardSelectionMenu(object obj)
         {
             ChangeViewModel(PageViewModels[3]);
         }
@@ -65,9 +66,15 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             ChangeViewModel(PageViewModels[4]);
         }
 
+        private void GoToEditCardsMenu(object obj)
+        {
+            ChangeViewModel(PageViewModels[5]);
+        }
+
         public MainWindowViewModel()
         {
             var questioningVM = new QuestioningViewModel();
+            var cardSelectionVM = new CardSelectionViewModel();
             var editingVM = new CardEditViewModel();
 
             m_pageViewModels = new List<IPageViewModel>();
@@ -75,15 +82,18 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             PageViewModels.Add(new MainMenuViewModel());
             PageViewModels.Add(questioningVM);
             PageViewModels.Add(new CategoriesViewModel());
-            PageViewModels.Add(editingVM);
+            PageViewModels.Add(cardSelectionVM);
             PageViewModels.Add(new SettingsViewModel());
+            PageViewModels.Add(editingVM);
 
             CurrentPageViewModel = PageViewModels[0];
 
             m_questioningController = new QuestioningController(questioningVM);
+            m_cardSelectionController = new CardSelectionController(cardSelectionVM);
             m_cardEditingController = new CardEditingController(editingVM);
 
             Mediator.Subscribe("GoToMainMenu", GoToMainMenu);
+            Mediator.Subscribe("GoToCardSelection", GoToCardSelectionMenu);
             Mediator.Subscribe("GoToCardEditing", GoToEditCardsMenu);
             Mediator.Subscribe("GoToCategories", GoToCategories);
             Mediator.Subscribe("GoToQuestioning", GoToQuestioning);
