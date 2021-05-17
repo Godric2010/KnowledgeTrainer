@@ -1,7 +1,6 @@
-﻿using KnowledgeTrainer.MVVMNavigation.ViewModels;
+﻿using Core.Cards;
+using KnowledgeTrainer.MVVMNavigation.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KnowledgeTrainer.MVVMNavigation.Controllers
 {
@@ -14,29 +13,27 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             m_viewModel = vm;
             m_viewModel.CreateNewCardAction = CreateNewCard;
             m_viewModel.SelectCardAction = SelectCard;
-            m_viewModel.PreviewItems = new System.Collections.ObjectModel.ObservableCollection<CardPreviewItem>();
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "TestCategory", Question = "Test Question with a very long text which probably does not fit inside this thing here. Blablablablabla blablabla" });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 03", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 04", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 05", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
-            m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = Guid.Empty, Category = "Test 02", Question = "A dumbass question with no smart answer behind." });
         }
 
         private void CreateNewCard()
         {
-            Mediator.Notify("GoToCardEditing", "");
+            Mediator.Notify("GoToCardEditing", null);
         }
 
         private void SelectCard(Guid cardID)
         {
             var card = App.CardController.GetCardByID(cardID);
             Mediator.Notify("GoToCardEditing", card);
+        }
+
+        public void UpdateDisplayedCards()
+        {
+            m_viewModel.PreviewItems = new System.Collections.ObjectModel.ObservableCollection<CardPreviewItem>();
+            var cards = App.CardController.GetAllCards();
+            foreach (Card card in cards)
+            {
+                m_viewModel.PreviewItems.Add(new CardPreviewItem { CardId = card.ID, Category = card.Category, Question = card.Question });
+            }
         }
     }
 }

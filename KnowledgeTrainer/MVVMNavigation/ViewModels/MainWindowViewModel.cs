@@ -1,4 +1,5 @@
-﻿using KnowledgeTrainer.MVVMNavigation.Controllers;
+﻿using Core.Cards;
+using KnowledgeTrainer.MVVMNavigation.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         private void GoToCardSelectionMenu(object obj)
         {
+            m_cardSelectionController.UpdateDisplayedCards();
             ChangeViewModel(PageViewModels[3]);
         }
 
@@ -68,6 +70,8 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         private void GoToEditCardsMenu(object obj)
         {
+            m_cardEditingController.ShowCardData((Card)obj);
+
             ChangeViewModel(PageViewModels[5]);
         }
 

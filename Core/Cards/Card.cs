@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Cards
 {
     public class Card
     {
-        public Guid ID { get; internal set; }
+        public Guid ID { get; set; }
 
         public string Category { get; set; }
 
@@ -16,7 +14,7 @@ namespace Core.Cards
 
         public int Level { get; set; }
 
-        public DateTime CreationDate { get; internal set; }
+        public DateTime CreationDate { get; set; }
 
         public DateTime LastRepeat { get; set; }
 

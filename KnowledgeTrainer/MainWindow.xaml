@@ -8,6 +8,8 @@
         Title="Knwoledge Trainer" Height="450" Width="800" Background="#FFF8A96B">
 
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <ContentControl Content="{Binding CurrentPageViewModel}"/>
+        <!--<Viewbox>-->
+            <ContentControl Content="{Binding CurrentPageViewModel}"/>
+        <!--</Viewbox>-->
     </Grid>
 </Window>

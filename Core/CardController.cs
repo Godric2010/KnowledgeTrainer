@@ -45,6 +45,11 @@ namespace Core
             JsonSerializer.SaveCardsToDisk(db.Cards, CardSaveDirectoryPath);
         }
 
+        public IEnumerable<Card> GetAllCards()
+        {
+            return db.Cards;
+        }
+
         public Card GetCardByID(Guid cardID)
         {
             var card = db.Cards.SingleOrDefault(c => c.ID == cardID);

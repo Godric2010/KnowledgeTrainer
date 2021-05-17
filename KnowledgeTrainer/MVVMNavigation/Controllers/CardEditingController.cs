@@ -12,51 +12,30 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
 
         private Card m_activeCard;
 
-        private uint? m_selectedCardIndex =  null;
-
         public CardEditingController(CardEditViewModel vm)
         {
             m_viewModel = vm;
             m_viewModel.RegisterForNecessaryFieldsCheck(CheckNecessaryFields);
-            m_viewModel.RegisterForCreateNewCard(ShowCardData);
-            m_viewModel.RegisterForEditCard(ShowCardData);
-            m_viewModel.RegisterForCancelAction(ClearFields);
-            m_viewModel.RegsisterForConfirmAction(SaveCardChanges);
-            m_viewModel.RegisterForDeleteCard(DeleteCard);
-            //m_viewModel.RegisterForNewCategory()
-
+            m_viewModel.RegisterConfirmAction(SaveCardChanges);
         }
 
-        private void ShowCardData()
+        public void ShowCardData(Card cardToShow)
         {
-            m_viewModel.EditingFieldsVisible = true;
-
-            if (m_selectedCardIndex == null)
+            if (cardToShow == null)
             {
                 CreateNewCard();
                 return;
             }
 
-
-            //m_activeCard = App.CardController.GetCardByID(cardID);
-            if (m_activeCard == null)
-                return;
+            m_activeCard = cardToShow;
 
             m_viewModel.CardID = m_activeCard.ID.ToString();
             m_viewModel.Level = m_activeCard.Level;
             m_viewModel.Category = m_activeCard.Category;
             m_viewModel.QuestionText = m_activeCard.Question;
             m_viewModel.AnswerText = m_activeCard.Answer;
-            m_viewModel.NecessaryFieldsAreSet = true;
+            m_viewModel.NecessaryFieldsAreSet = false;
 
-        }
-
-        public void DeleteCard()
-        {
-
-
-            //App.CardController.DeleteCard(cardID);
-            ClearFields();
         }
 
         public void SaveCardChanges()
@@ -72,18 +51,9 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             m_activeCard.Answer = m_viewModel.AnswerText;
 
             App.CardController.UpdateCard(m_activeCard);
+            Mediator.Notify("GoToCardSelection", "");
         }
 
-        public void ClearFields()
-        {
-            m_viewModel.CardID = "";
-            m_viewModel.Level = 0;
-            m_viewModel.Category = "";
-            m_viewModel.QuestionText = "";
-            m_viewModel.AnswerText = "";
-            m_viewModel.NecessaryFieldsAreSet = false;
-            m_viewModel.EditingFieldsVisible = false;
-        }
 
         private void CreateNewCard()
         {
