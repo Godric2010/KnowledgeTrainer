@@ -10,6 +10,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
     public class MainWindowViewModel : BaseViewModel
     {
         private QuestioningController m_questioningController;
+        private CategorySelectionController m_categorySelectionController;
         private CardSelectionController m_cardSelectionController;
         private CardEditingController m_cardEditingController;
 
@@ -54,6 +55,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         private void GoToCategories(object obj)
         {
+            m_categorySelectionController.UpdateDisplayedCards();
             ChangeViewModel(PageViewModels[2]);
         }
 
@@ -78,6 +80,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
         public MainWindowViewModel()
         {
             var questioningVM = new QuestioningViewModel();
+            var categoryVM = new CategoriesViewModel();
             var cardSelectionVM = new CardSelectionViewModel();
             var editingVM = new CardEditViewModel();
 
@@ -85,7 +88,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
             PageViewModels.Add(new MainMenuViewModel());
             PageViewModels.Add(questioningVM);
-            PageViewModels.Add(new CategoriesViewModel());
+            PageViewModels.Add(categoryVM);
             PageViewModels.Add(cardSelectionVM);
             PageViewModels.Add(new SettingsViewModel());
             PageViewModels.Add(editingVM);
@@ -93,6 +96,7 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             CurrentPageViewModel = PageViewModels[0];
 
             m_questioningController = new QuestioningController(questioningVM);
+            m_categorySelectionController = new CategorySelectionController(categoryVM);
             m_cardSelectionController = new CardSelectionController(cardSelectionVM);
             m_cardEditingController = new CardEditingController(editingVM);
 

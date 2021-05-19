@@ -6,42 +6,40 @@
              xmlns:viewmodels="clr-namespace:KnowledgeTrainer.MVVMNavigation.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CardEditViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <!--<Viewbox>-->
-            <Grid Margin="25,0,25,0" VerticalAlignment="Center" HorizontalAlignment="Center" Name="Grid">
-                <Grid.Resources>
-                    <BooleanToVisibilityConverter x:Key="BoolToVis" />
-                </Grid.Resources>
+    
+    <Grid Margin="25,0,25,0" VerticalAlignment="Center" HorizontalAlignment="Center" Name="Grid">
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </Grid.Resources>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition MinWidth="500" MaxWidth="1000"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="120"/>
-                    <RowDefinition Height="120"/>
-                    <RowDefinition Height="30"/>
-                </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition MinWidth="500" MaxWidth="1000"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
 
-                <Button Grid.Row="0" Width="35" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding GoToMainMenu}" Content="&lt;-" />
-                <Label Grid.Row="1" Grid.Column="0" Content="Card ID:"/>
-                <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding CardID}"/>
-                <Label Grid.Row="2" Grid.Column="0" Content="Aktuelles Level:"/>
-                <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding Level}"/>
-                <Label Grid.Row="3" Grid.Column="0" Content="Kategorie:"/>
-                <TextBox Grid.Row="3" Grid.Column="1" FontSize="16" Text="{Binding Path=Category, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
-                <Label Grid.Row="4" Grid.Column="0" Content="Frage:"/>
-                <TextBox Grid.Row="4" Grid.Column="1" FontSize="16" Text="{Binding Path=QuestionText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
-                <Label Grid.Row="5" Grid.Column="0" Content="Antwort:"/>
-                <TextBox Grid.Row="5" Grid.Column="1" FontSize="16" Text="{Binding Path=AnswerText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
+        <Button Grid.Row="0" Width="35" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding GoToMainMenu}" Content="&lt;-" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Card ID:"/>
+        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding CardID}"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Aktuelles Level:"/>
+        <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding Level}"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Kategorie:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" FontSize="16" Text="{Binding Path=Category, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="Frage:"/>
+        <TextBox Grid.Row="4" Grid.Column="1" FontSize="16" Text="{Binding Path=QuestionText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="Antwort:"/>
+        <TextBox Grid.Row="5" Grid.Column="1" FontSize="16" Text="{Binding Path=AnswerText, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" IsEnabled="{Binding Path=EditingPossible, Converter={StaticResource BoolToVis}}"/>
 
-                <Button Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" Background="ForestGreen" Content="Übernehmen" Command="{Binding ConfirmAction}" IsEnabled="{Binding Path=NecessaryFieldsAreSet, Converter={StaticResource BoolToVis}}" />
-            </Grid>
-        <!--</Viewbox>-->
+        <Button Grid.Column="1" Grid.Row="6" HorizontalAlignment="Stretch" Background="ForestGreen" Content="Übernehmen" Command="{Binding ConfirmAction}" Visibility="{Binding Path=NecessaryFieldsAreSet, Converter={StaticResource BoolToVis}}" />
     </Grid>
+
 
 </UserControl>

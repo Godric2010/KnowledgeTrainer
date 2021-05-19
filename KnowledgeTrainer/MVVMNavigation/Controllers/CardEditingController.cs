@@ -43,6 +43,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             if (m_activeCard == null)
             {
                 App.CardController.CreateNewCard(m_viewModel.Category, m_viewModel.QuestionText, m_viewModel.AnswerText);
+                Mediator.Notify("GoToCardSelection", "");
                 return;
             }
 
@@ -63,13 +64,16 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             m_viewModel.QuestionText = "";
             m_viewModel.AnswerText = "";
             m_viewModel.NecessaryFieldsAreSet = false;
+            m_activeCard = null;
         }
 
         private void CheckNecessaryFields()
         {
-            m_viewModel.NecessaryFieldsAreSet = !string.IsNullOrEmpty(m_viewModel.Category) &&
+            var enableConfirmationButton = !string.IsNullOrEmpty(m_viewModel.Category) &&
                 !string.IsNullOrEmpty(m_viewModel.QuestionText) &&
                 !string.IsNullOrEmpty(m_viewModel.AnswerText);
+
+            m_viewModel.NecessaryFieldsAreSet = enableConfirmationButton;
         }
     }
 }

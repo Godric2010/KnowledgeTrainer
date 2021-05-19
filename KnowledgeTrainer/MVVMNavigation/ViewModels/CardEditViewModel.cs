@@ -17,6 +17,8 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
 
         private string m_answerText;
 
+        private bool m_allFieldsAreValid;
+
         public ICommand GoToMainMenu => m_goToMainMenu ??= new RelayCommand(x => { Mediator.Notify("GoToCardSelection", ""); });
 
         public ICommand ConfirmAction => new RelayCommand(x => { m_confirmAction.Invoke(); });
@@ -57,7 +59,15 @@ namespace KnowledgeTrainer.MVVMNavigation.ViewModels
             }
         }
 
-        public bool NecessaryFieldsAreSet { get; set; }
+        public bool NecessaryFieldsAreSet
+        {
+            get => m_allFieldsAreValid; 
+            set
+            {
+                m_allFieldsAreValid = value;
+                OnPropertyChanged("NecessaryFieldsAreSet");
+            }
+        }
 
         public void RegisterForNecessaryFieldsCheck(Action action)
         {

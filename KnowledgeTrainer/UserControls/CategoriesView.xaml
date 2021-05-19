@@ -7,6 +7,37 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Grid.Row="0" Content="Zurück" Height="30" Width="75" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding GoToMainMenu}"></Button>
+        <Label Grid.Column="1" Grid.Row="0" Content="Wähle eine Kategorie" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"></Label>
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
+            <ListView  Margin="25,0,25,0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" SelectionMode="Single">
+                <ListView.Template>
+                    <ControlTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ControlTemplate>
+                </ListView.Template>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="5" BorderThickness="2" BorderBrush="Black">
+                            <StackPanel Height="100" Width="200" >
+                                <TextBlock Text="{Binding Category}" FontSize="15" FontStyle="Italic" Margin="5,0,0,0"/>
+                                <Separator Margin="0,5,0,5" BorderBrush="Black" BorderThickness="0.5"/>
+                                <TextBlock Text="{Binding CardsInCategory}" TextWrapping="Wrap" FontSize="15"  Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </UserControl>
