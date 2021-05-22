@@ -12,10 +12,10 @@
         <Label x:Name="Greeter" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" FontStyle="Normal" FontSize="20" FontWeight="Normal" FontFamily="Courgette" Background="Transparent" Content="gfnfgh"/>
         <Label x:Name="Copyright" Content="Created by Sebastian Borsch" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,100,0,0" FontStyle="Italic" FontWeight="Thin" FontFamily="Courgette" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontStretch="Medium" FontSize="11" Foreground="DimGray"/>
         <WrapPanel Width="290" Height="140">
-            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Quick_Start_Button" Content="Abfrage starten" Command="{Binding GoToQuestioning}"  HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" Width="290" HorizontalContentAlignment="Left"/>
-            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Category_Select_Button" Content="Kategorie abfragen" Command="{Binding GoToCategories}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
-            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Edit_Cards_Button" Content="Karten hinzufügen / bearbeiten" Command="{Binding GoToCardEditing}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
-            <Button Style="{DynamicResource ButtonStyleDefault}" x:Name="Settings_Button" Content="Einstellungen" Command="{Binding GoToSettings}" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Courier New" FontSize="16" Height="35" Background="#00DDDDDD" BorderThickness="0,0,0,0" Width="290" HorizontalContentAlignment="Left"/>
+            <Button x:Name="Quick_Start_Button" Content="Abfrage starten" Command="{Binding GoToQuestioning}" Style="{StaticResource ScrappyButton}" Width="290" Height="35" />
+            <Button x:Name="Category_Select_Button" Content="Kategorie abfragen" Command="{Binding GoToCategories}" Style="{StaticResource ScrappyButton}" Height="35" Width="290"/>
+            <Button x:Name="Edit_Cards_Button" Content="Karten hinzufügen / bearbeiten" Command="{Binding GoToCardEditing}" Style="{StaticResource ScrappyButton}" Height="35" Width="290"/>
+            <Button x:Name="Settings_Button" Content="Einstellungen" Command="{Binding GoToSettings}" Style="{StaticResource ScrappyButton}" Height="35" Width="290" IsEnabled="False"/>
         </WrapPanel>
 
     </Grid>

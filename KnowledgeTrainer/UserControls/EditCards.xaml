@@ -26,7 +26,7 @@
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Width="35" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding GoToMainMenu}" Content="&lt;-" />
+        <Button Grid.Row="0" Style="{StaticResource BackButton}" Command="{Binding GoToMainMenu}"/>
         <Label Grid.Row="1" Grid.Column="0" Content="Card ID:"/>
         <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Content="{Binding CardID}"/>
         <Label Grid.Row="2" Grid.Column="0" Content="Aktuelles Level:"/>

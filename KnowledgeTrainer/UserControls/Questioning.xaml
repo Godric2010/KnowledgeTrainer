@@ -21,7 +21,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Row="0" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Left" Command="{Binding GoToMainMenu}">Abbfrage abbrechen</Button>
+        <Button Grid.Row="0" Style="{StaticResource ResourceKey=BackButton}"  Command="{Binding GoToMainMenu}"/>
         <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Stretch" FontSize="36">Abfrage</Label>
         <Label Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="20" Content="Progress..."/>
         <ProgressBar Grid.Row="2" Name="Fortschritt" Height="7.5" Margin="10,0,10,0" VerticalAlignment="Bottom" Maximum="100" Minimum="0" Value="{Binding QuestionProgress}"/>
@@ -40,7 +40,7 @@
             <Button Grid.Column="0" Grid.Row="0" Width="50" Margin="0,1,0,1" MaxHeight="30" HorizontalAlignment="Center" Command="{Binding ShowAnswerText}" > Pruefen!</Button>
             <Button Grid.Column="1" Grid.Row="0" Width="50" Margin="60,1,0,1" MaxHeight="30" HorizontalAlignment="Center" Background="Green" Command="{Binding AnswerWasCorrect}" Visibility="{Binding Path=ShowAnswerAndOptions, Converter={StaticResource BoolToVis}}">Korrekt!</Button>
             <Button Grid.Column="1" Grid.Row="0" Width="50" Margin="-60,1,0,1" MaxHeight="30" HorizontalAlignment="Center" Background="Red" Command="{Binding AnswerWasFalse}" Visibility="{Binding Path=ShowAnswerAndOptions, Converter={StaticResource BoolToVis}}">Falsch!</Button>
-            <TextBox Grid.Column="0" Grid.Row="1" Background="AntiqueWhite" FontSize="20">Test text...</TextBox>
+            <TextBox Grid.Column="0" Grid.Row="1" Style="{StaticResource ScrappyTextbox}" Background="AntiqueWhite" FontSize="20">Test text...</TextBox>
             <TextBlock Grid.Column="1" Grid.Row="1" FontSize="16" Visibility="{Binding Path=ShowAnswerAndOptions, Converter={StaticResource BoolToVis}}" Text="{Binding Answer}"></TextBlock>
         </Grid>
     </Grid>

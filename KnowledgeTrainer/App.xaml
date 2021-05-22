@@ -5,26 +5,35 @@
              xmlns:uc="clr-namespace:KnowledgeTrainer.UserControls">
     <Application.Resources>
 
-        <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">
-            <uc:MainMenu/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:QuestioningViewModel}">
-            <uc:Questioning/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:CategoriesViewModel}">
-            <uc:CategoriesView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:CardEditViewModel}">
-            <uc:EditCards/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
-            <uc:SettingsView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vms:CardSelectionViewModel}">
-            <uc:CardSeletion/>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/TextboxTheme.xaml"/>
+                <ResourceDictionary Source="Theme/BackButton.xaml"/>
+                <ResourceDictionary Source="Theme/ButtonTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+       
+        
+            <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">
+                <uc:MainMenu/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:QuestioningViewModel}">
+                <uc:Questioning/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CategoriesViewModel}">
+                <uc:CategoriesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CardEditViewModel}">
+                <uc:EditCards/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:SettingsViewModel}">
+                <uc:SettingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vms:CardSelectionViewModel}">
+                <uc:CardSeletion/>
+            </DataTemplate>
 
-        <Style x:Key="FocusVisual">
+        </ResourceDictionary>
+        <!--<Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -41,8 +50,8 @@
         <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
         <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
         <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
-        <Style x:Key="ButtonStyleDefault" TargetType="{x:Type Button}">
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>-->
+        <!--<Style x:Key="ButtonStyleDefault" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="#0000"/>
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -78,6 +87,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
     </Application.Resources>
 </Application>

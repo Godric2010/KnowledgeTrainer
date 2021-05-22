@@ -5,11 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KnowledgeTrainer" xmlns:viewmodels="clr-namespace:KnowledgeTrainer.MVVMNavigation.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="Knwoledge Trainer" Height="450" Width="800" Background="#FFF8A96B">
+        Title="Knwoledge Trainer" Height="450" Width="800" >
 
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <!--<Viewbox>-->
-            <ContentControl Content="{Binding CurrentPageViewModel}"/>
-        <!--</Viewbox>-->
-    </Grid>
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                <GradientStop Color="#CDFDA569" Offset="0"/>
+                <GradientStop Color="#FFF8A96B" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <!--<Viewbox>-->
+                <ContentControl Content="{Binding CurrentPageViewModel}"/>
+            <!--</Viewbox>-->
+        </Grid>
+    </Border>
 </Window>

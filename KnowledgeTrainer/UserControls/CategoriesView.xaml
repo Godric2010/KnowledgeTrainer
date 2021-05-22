@@ -17,7 +17,7 @@
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="0" Grid.Row="0" Content="Zurück" Height="30" Width="75" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding GoToMainMenu}"></Button>
+        <Button Grid.Column="0" Grid.Row="0" Style="{StaticResource BackButton}" Command="{Binding GoToMainMenu}"></Button>
         <Label Grid.Column="1" Grid.Row="0" Content="Wähle eine Kategorie" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30"></Label>
         <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" VerticalScrollBarVisibility="Auto">
             <ListView  Margin="25,0,25,0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" SelectionMode="Single">
