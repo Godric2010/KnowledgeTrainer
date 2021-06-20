@@ -9,7 +9,6 @@
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Border CornerRadius="5" Background="White" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                         <TextBox Margin="1"
-                                 Text="{TemplateBinding Text}"
                                  BorderThickness="0"
                                  Background="Transparent"
                                  VerticalAlignment="Stretch"
@@ -23,7 +22,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
     </Style>
 
 </ResourceDictionary>

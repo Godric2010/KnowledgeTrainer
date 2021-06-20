@@ -12,6 +12,8 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
 
         private Questioning m_data;
 
+        private bool m_supressLevelIncrease;
+
         public QuestioningController(QuestioningViewModel vm)
         {
             m_viewModel = vm;
@@ -25,9 +27,15 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             // Pull all questions to ask ...
             IEnumerable<Core.Cards.Card> cardsToUse;
             if (string.IsNullOrEmpty(category))
+            {
                 cardsToUse = App.CardController.GetCardsToRepeat();
+                m_supressLevelIncrease = false;
+            }
             else
+            {
                 cardsToUse = App.CardController.GetCardsByCategory(category);
+                m_supressLevelIncrease = true;
+            }
 
             m_data = new Questioning(cardsToUse);
 
@@ -43,7 +51,7 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
         {
             m_data.CurrentCardIndex++;
 
-            if(m_data.CurrentCardIndex == m_data.CardStackSize)
+            if (m_data.CurrentCardIndex == m_data.CardStackSize)
             {
                 Mediator.Notify("GoToMainMenu", "");
                 return;
@@ -55,21 +63,29 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
             // ... prepare the view model
             m_viewModel.Question = cardToShow.Question;
             m_viewModel.Answer = cardToShow.Answer;
+            m_viewModel.UserAnswer = " ";
             m_viewModel.QuestionsAsked = m_data.CurrentCardIndex;
             m_viewModel.QuestionProgress = m_data.CardStackSize == 0 ? 0 : (double)m_data.CurrentCardIndex / m_data.CardStackSize;
             m_viewModel.ShowAnswerAndOptions = false;
+            m_viewModel.AnswerButtonIsVisible = true;
         }
 
         private void ShowAnswer()
         {
             m_viewModel.ShowAnswerAndOptions = true;
+            m_viewModel.AnswerButtonIsVisible = false;
         }
 
         private void SetCardToNextLevel()
         {
-            var card = m_data.GetCardFromIndex(m_data.CurrentCardIndex);
-            card.Level++;
-            card.NextRepeat = GetNextDateToQuestionThisCard(card.Level);
+            Core.Cards.Card card = m_data.GetCardFromIndex(m_data.CurrentCardIndex);
+
+            if (!m_supressLevelIncrease)
+            {
+                card.Level++;
+                card.LastRepeat = DateTime.Today;
+                card.NextRepeat = GetNextDateToQuestionThisCard(card.Level);
+            }
 
             App.CardController.UpdateCard(card);
             GetNewCardData();
@@ -78,10 +94,13 @@ namespace KnowledgeTrainer.MVVMNavigation.Controllers
 
         private void SetCardToFirstLevel()
         {
-            var card = m_data.GetCardFromIndex(m_data.CurrentCardIndex);
-            card.Level = 0;
-            card.NextRepeat = GetNextDateToQuestionThisCard(card.Level);
-
+            Core.Cards.Card card = m_data.GetCardFromIndex(m_data.CurrentCardIndex);
+            if (!m_supressLevelIncrease)
+            {
+                card.Level = 0;
+                card.LastRepeat = DateTime.Today;
+                card.NextRepeat = GetNextDateToQuestionThisCard(card.Level);
+            }
             App.CardController.UpdateCard(card);
             GetNewCardData();
         }

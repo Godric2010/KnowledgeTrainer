@@ -85,7 +85,7 @@ namespace Core
             var today = DateTime.Today;
             foreach (var card in db.Cards)
             {
-                int result = card.LastRepeat.Date.CompareTo(today.Date);
+                int result = card.NextRepeat.Date.CompareTo(today.Date);
                 if (result > 0) continue;
 
                 cardsToRepeat.Add(card);
